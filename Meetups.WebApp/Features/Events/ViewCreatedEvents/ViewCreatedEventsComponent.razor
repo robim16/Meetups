@@ -1,9 +1,59 @@
 ﻿@page "/"
+@using Meetups.WebApp.Features.Events.CreateEvent
 
-<h3>Created Events</h3>
+@inject ViewCreatedEventsService viewCreatedEventsService;
+
+<h3>Created Events</h3
+
+@if(_createdEvents is not null && _createdEvents.Count > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Begin Time</th>
+                <th>End Time</th>
+                <th>Capacity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var createdEvent in _createdEvents)
+            {
+                <tr>
+                    <td>@createdEvent.Title</td>
+                    <td>@createdEvent.BeginTime.ToString(@"hh\:mm")</td>
+                    <td>@createdEvent.EndTime.ToString(@"hh\:mm")</td>
+                    <td>
+                        @{
+                            if(createdEvent.Capacity == 0)
+                            {
+                                <text>Unlimited</text>;
+                            }
+                            else
+                            {
+                                <text>@createdEvent.Capacity</text>;
+                            }
+                            
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 
 <a href="/events/create" class="btn btn-primary">Create New Meetup</a>
 
 @code {
+    private List<EventViewModel> _createdEvents = new List<EventViewModel>();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            _createdEvents = await viewCreatedEventsService.GetEventsAsync();
+            StateHasChanged();
+        }
+    }
 }

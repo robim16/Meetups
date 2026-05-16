@@ -1,8 +1,15 @@
-﻿@page "/events/create"
+﻿@page "/events/create";
 
-<div class="alert alert-danger" role="alert">
-   @errorMessage
-</div>
+@inject NavigationManager NavigationManager;
+@inject CreateEventService CreateEventService;
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
 
 <h3>Create Event</h3>
 
@@ -51,6 +58,7 @@
         <InputText id="Location" class="form-control" @bind-Value="_eventViewModel.Location" />
         <ValidationMessage For="@(() => _eventViewModel.Location)" />
     </div>
+    <br />
     <button type="submit" class="btn btn-primary">Create</button>
     &nbsp;
     <NavLink class="btn btn-secondary" href="/">Cancel</NavLink>
@@ -60,25 +68,15 @@
     private EventViewModel _eventViewModel = new EventViewModel();
     string? errorMessage = string.Empty;
 
-    private void CreateEvent()
+    private async Task CreateEvent()
     {
-        errorMessage = _eventViewModel.ValidateDates();
-
+        errorMessage = CreateEventService.ValidateEvent(_eventViewModel);
         if(!string.IsNullOrWhiteSpace(errorMessage))
         {
             return;
-        }
+        };
+        await CreateEventService.CreateEventAsync(_eventViewModel);
 
-        errorMessage = _eventViewModel.ValidateLocation();
-        if (!string.IsNullOrWhiteSpace(errorMessage))
-        {
-            return;
-        }
-
-        errorMessage = _eventViewModel.ValidateMeetupLink();    
-        if (!string.IsNullOrWhiteSpace(errorMessage))
-        {
-            return;
-        }
+        NavigationManager.NavigateTo("/");
     }
 }

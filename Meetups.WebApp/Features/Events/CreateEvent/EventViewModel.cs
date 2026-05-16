@@ -31,7 +31,7 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
         public string? Category { get; set; }
         public int Capacity { get; set; }
 
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int OrganizerId { get; set; }
 
         public EventViewModel()
@@ -55,6 +55,25 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
             {
                 return "Begin time cannot be after end time.";
             }
+
+            DateTime combinedBeginDateTime = new DateTime(BeginDate.Year, BeginDate.Month, BeginDate.Day, BeginTime.Hour, BeginTime.Minute, BeginTime.Second);
+            DateTime combinedEndDateTime = new DateTime(EndDate.Year, EndDate.Month, EndDate.Day, EndTime.Hour, EndTime.Minute, EndTime.Second);
+
+            if (combinedBeginDateTime < DateTime.Now)
+            {
+                return "Begin date and time cannot be in the past.";
+            }
+
+            if (combinedEndDateTime <= combinedBeginDateTime)
+            {
+                return "End date and time cannot be before begin date and time.";
+            }
+
+            if (combinedEndDateTime - combinedBeginDateTime > TimeSpan.FromDays(1))
+            {
+                return "Event duration cannot exceed 24 hours.";
+            }
+
             return string.Empty;
         }
 

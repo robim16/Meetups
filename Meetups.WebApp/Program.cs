@@ -1,14 +1,27 @@
 
 
+using Meetups.WebApp.Data;
+using Meetups.WebApp.Features.Events.CreateEvent;
 using Meetups.WebApp.Features.Events.ViewCreatedEvents;
 using Meetups.WebApp.Shared;
 using Meetups.WebApp.Shared.Layout;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<CreateEventService>();
+builder.Services.AddTransient<ViewCreatedEventsService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
