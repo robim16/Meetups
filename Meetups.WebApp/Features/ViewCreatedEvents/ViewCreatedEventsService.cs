@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Meetups.WebApp.Data;
 using Meetups.WebApp.Data.Entities;
-using Meetups.WebApp.Features.Events.CreateEvent;
+using Meetups.WebApp.Shared.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace Meetups.WebApp.Features.Events.ViewCreatedEvents
+namespace Meetups.WebApp.Features.ViewCreatedEvents
 {
     public class ViewCreatedEventsService
     {

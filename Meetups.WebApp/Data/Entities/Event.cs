@@ -1,4 +1,4 @@
-﻿using Meetups.WebApp.Features.Events.CreateEvent;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace Meetups.WebApp.Data.Entities
@@ -30,9 +30,13 @@ namespace Meetups.WebApp.Data.Entities
 
         [Required]
         public string? Category { get; set; }
-        public int Capacity { get; set; }
 
         [Range(0, int.MaxValue)]
+        public int Capacity { get; set; }
+
+        [Required]
+        public string? ImageUrl { get; set; }
+
         public int OrganizerId { get; set; }
     }
 }

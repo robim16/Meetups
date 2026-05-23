@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using Meetups.WebApp.Features.Events.CreateEvent
 
 @inject ViewCreatedEventsService viewCreatedEventsService;
 
@@ -20,9 +19,20 @@
             @foreach(var createdEvent in _createdEvents)
             {
                 <tr>
-                    <td>@createdEvent.Title</td>
-                    <td>@createdEvent.BeginTime.ToString(@"hh\:mm")</td>
-                    <td>@createdEvent.EndTime.ToString(@"hh\:mm")</td>
+                    <td style="text-align: center;">
+                        @{
+                            var eventImage = createdEvent.ImageUrl;
+                            if(string.IsNullOrWhiteSpace(eventImage))
+                            {
+                                eventImage = "/images/default-event.png";
+                            }
+                            <img src="@eventImage" alt="Event Image" class="img-thumbnail" style="width: 100px; height: 59px;" />
+                        }
+                        <br />
+                        @createdEvent.Title
+                    </td>
+                    <td>@createdEvent.BeginDate.ToString("yyyy-MM-dd") @createdEvent.BeginTime.ToString(@"hh\:mm")</td>
+                    <td>@createdEvent.EndDate.ToString("yyyy-MM-dd") @createdEvent.EndTime.ToString(@"hh\:mm")</td>
                     <td>
                         @{
                             if(createdEvent.Capacity == 0)

@@ -1,8 +1,8 @@
 
 
 using Meetups.WebApp.Data;
-using Meetups.WebApp.Features.Events.CreateEvent;
-using Meetups.WebApp.Features.Events.ViewCreatedEvents;
+using Meetups.WebApp.Features.CreateEvent;
+using Meetups.WebApp.Features.ViewCreatedEvents;
 using Meetups.WebApp.Shared;
 using Meetups.WebApp.Shared.Layout;
 using Microsoft.EntityFrameworkCore;

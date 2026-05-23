@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System.ComponentModel.DataAnnotations;
 
-namespace Meetups.WebApp.Features.Events.CreateEvent
+namespace Meetups.WebApp.Shared.ViewModels
 {
     public class EventViewModel
     {
@@ -31,6 +32,12 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
         public string? Category { get; set; }
         public int Capacity { get; set; }
 
+        [Required(ErrorMessage = "Cover image is required.")]
+        public IBrowserFile CoverImage { get; set; }
+
+        [Required]
+        public string? ImageUrl { get; set; }
+
         [Range(0, int.MaxValue)]
         public int OrganizerId { get; set; }
 
@@ -42,6 +49,7 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
             EndTime = TimeOnly.FromDateTime(DateTime.Now);
 
             Category = MeetupCategoriesEnum.InPerson.ToString();
+            ImageUrl = $"images/image-placeholder.png";
         }
 
         public string? ValidateDates()
