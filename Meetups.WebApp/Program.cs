@@ -2,6 +2,7 @@
 
 using Meetups.WebApp.Data;
 using Meetups.WebApp.Features.CreateEvent;
+using Meetups.WebApp.Features.EditEvent;
 using Meetups.WebApp.Features.ViewCreatedEvents;
 using Meetups.WebApp.Shared;
 using Meetups.WebApp.Shared.Layout;
@@ -9,8 +10,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddTransient<SharedHelper>();
 builder.Services.AddTransient<CreateEventService>();
 builder.Services.AddTransient<ViewCreatedEventsService>();
+builder.Services.AddTransient<EditEventService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

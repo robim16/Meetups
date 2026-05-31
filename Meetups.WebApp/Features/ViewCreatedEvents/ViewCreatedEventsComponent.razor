@@ -20,16 +20,18 @@
             {
                 <tr>
                     <td style="text-align: center;">
-                        @{
-                            var eventImage = createdEvent.ImageUrl;
-                            if(string.IsNullOrWhiteSpace(eventImage))
-                            {
-                                eventImage = "/images/default-event.png";
+                        <a href="/events/edit/@createdEvent.EventId">
+                             @{
+                                var eventImage = createdEvent.ImageUrl;
+                                if(string.IsNullOrWhiteSpace(eventImage))
+                                {
+                                    eventImage = "/images/default-event.png";
+                                }
+                                <img src="@eventImage" alt="Event Image" class="img-thumbnail" style="width: 100px; height: 59px;" />
                             }
-                            <img src="@eventImage" alt="Event Image" class="img-thumbnail" style="width: 100px; height: 59px;" />
-                        }
-                        <br />
-                        @createdEvent.Title
+                            <br />
+                            @createdEvent.Title
+                        </a>
                     </td>
                     <td>@createdEvent.BeginDate.ToString("yyyy-MM-dd") @createdEvent.BeginTime.ToString(@"hh\:mm")</td>
                     <td>@createdEvent.EndDate.ToString("yyyy-MM-dd") @createdEvent.EndTime.ToString(@"hh\:mm")</td>

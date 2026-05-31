@@ -52,7 +52,34 @@ namespace Meetups.WebApp.Shared.ViewModels
             ImageUrl = $"images/image-placeholder.png";
         }
 
-        public string? ValidateDates()
+        public string? Validate()
+        {
+        
+            string errorMessage = string.Empty;
+
+            errorMessage = ValidateDates();
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                return errorMessage;
+            }
+
+            errorMessage = ValidateLocation();
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+               return errorMessage;
+            }
+
+            errorMessage = ValidateMeetupLink();
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+               return errorMessage;
+            }
+
+            return string.Empty;
+        }
+
+        private string? ValidateDates()
         {
 
             if (BeginDate > EndDate)
@@ -94,7 +121,7 @@ namespace Meetups.WebApp.Shared.ViewModels
             return true;
         }
 
-        public string? ValidateLocation()
+        private string? ValidateLocation()
         {
             if (Category == MeetupCategoriesEnum.InPerson.ToString() && string.IsNullOrEmpty(Location))
             {
@@ -103,7 +130,7 @@ namespace Meetups.WebApp.Shared.ViewModels
             return string.Empty;
         }
 
-        public string? ValidateMeetupLink()
+        private string? ValidateMeetupLink()
         {
             if (Category == MeetupCategoriesEnum.Online.ToString() && string.IsNullOrWhiteSpace(MeetupLink))
             {

@@ -1,0 +1,52 @@
+﻿@page "/events/edit/{eventId:int}"
+@inject EditEventService EditEventService
+
+<h3>Edit Event</h3>
+
+@if (_eventViewModel is not null)
+{
+    <AddUpdateEventComponent EventViewModel="_eventViewModel"
+                             OnSaved="UpdateEvent"
+                             ErrorMessage="@errorMessage">
+    
+        <ErrorMessageFragment>
+            <ErrorMessageComponent ErrorMessage="@errorMessage" />
+        </ErrorMessageFragment>
+    </AddUpdateEventComponent>
+    
+}
+else
+{
+    <ErrorMessageComponent ErrorMessage="Event not found." />
+}
+
+
+@code {
+    private EventViewModel _eventViewModel = new EventViewModel();
+    private string? errorMessage = string.Empty;
+
+    [Parameter]
+    public int eventId { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+
+            _eventViewModel = await EditEventService.GetEventByIdAsync(eventId);
+            StateHasChanged();
+       }
+    }
+
+    private async Task UpdateEvent()
+    {
+        errorMessage = _eventViewModel.Validate();
+        if(!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            return;
+        }
+
+        await EditEventService.UpdateEventAsync(_eventViewModel);
+    }
+
+}
