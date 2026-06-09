@@ -1,5 +1,10 @@
 ﻿@page "/events/edit/{eventId:int}"
 @inject EditEventService EditEventService
+@inject NavigationManager NavigationManager
+
+@using Meetups.WebApp.Features.EditEvent
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
 
 <h3>Edit Event</h3>
 
@@ -14,16 +19,25 @@
         </ErrorMessageFragment>
     </AddUpdateEventComponent>
     
+    <button class="btn btn-primary" @onclick="Delete">Delete</button>
+    <br />
+
+    <DeleteEventComponent 
+        ButtonClass="btn btn-primary" 
+        EventViewModel="_eventViewModel" />
 }
 else
 {
     <ErrorMessageComponent ErrorMessage="Event not found." />
 }
 
+<ConfirmDialogComponent @ref="confirmDialogComponent"/>
+
 
 @code {
     private EventViewModel _eventViewModel = new EventViewModel();
     private string? errorMessage = string.Empty;
+    private ConfirmDialogComponent? confirmDialogComponent;
 
     [Parameter]
     public int eventId { get; set; }
@@ -35,7 +49,7 @@ else
 
             _eventViewModel = await EditEventService.GetEventByIdAsync(eventId);
             StateHasChanged();
-       }
+        }
     }
 
     private async Task UpdateEvent()
@@ -47,6 +61,15 @@ else
         }
 
         await EditEventService.UpdateEventAsync(_eventViewModel);
+
+        NavigationManager.NavigateTo("/");
     }
 
+    private void Delete()
+    {
+        confirmDialogComponent?.Show("Are you sure you want to delete this event?", ()=>
+        {
+            
+        });
+    }
 }

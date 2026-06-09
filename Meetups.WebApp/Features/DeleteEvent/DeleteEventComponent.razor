@@ -1,0 +1,46 @@
+﻿@inject NavigationManager NavigationManager
+@inject DeleteEventService DeleteEventService
+
+
+<ErrorMessageComponent ErrorMessage="@errorMessage" />
+<button class="@ButtonClass" @onclick="HandleDelete">
+    Delete
+</button>
+<br />
+
+<ConfirmDialogComponent @ref="confirmDialogComponent" />
+
+@code {
+    [Parameter]
+    public string? ButtonClass { get; set; }
+
+    [Parameter]
+    public EventViewModel? EventViewModel { get; set; }
+
+    private ConfirmDialogComponent? confirmDialogComponent;
+
+    private string? errorMessage = string.Empty;
+
+    private void HandleDelete()
+    {
+        confirmDialogComponent?.Show($"Are you sure you want to delete this event: {EventViewModel?.Title}?",async() =>
+        {
+            if(DeleteEventService.IsEventDeletable(EventViewModel?.EventId) == false)
+            {
+                errorMessage = "This event cannot be deleted because it has associated attendees.";
+
+                StateHasChanged();
+                return;
+            }
+
+            if(await DeleteEventService.DeleteEventAsync(EventViewModel?.EventId))
+            {
+                NavigationManager.NavigateTo("/", forceLoad: true);
+            }
+
+            else {
+                errorMessage = "Failed to delete the event. Please try again.";
+            }
+        });
+    }
+}

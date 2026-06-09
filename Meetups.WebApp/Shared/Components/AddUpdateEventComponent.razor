@@ -61,6 +61,7 @@
 
         @if (EventViewModel.Category == MeetupCategoriesEnum.InPerson.ToString())
         {
+            EventViewModel.MeetupLink = string.Empty;
             <div class="form-group">
                 <label for="Location">Location</label>
                 <InputText id="Location" class="form-control" @bind-Value="EventViewModel.Location" />
@@ -69,6 +70,7 @@
         }
         else if (EventViewModel.Category == MeetupCategoriesEnum.Online.ToString())
         {
+            EventViewModel.MeetupLink = string.Empty;
             <div class="form-group">
                 <label for="MeetupLink">Meetup Link</label>
                 <InputText id="MeetupLink" class="form-control" @bind-Value="EventViewModel.MeetupLink" />
@@ -96,7 +98,16 @@
         
         <ValidationSummary />
         <br />
-        <button type="submit" class="btn btn-primary">Create</button>
+        @if(EventViewModel.EventId > 0)
+        {
+            <button type="submit" class="btn btn-primary">Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary">Create</button>
+        }
+        )
+        
         &nbsp;
         <NavLink class="btn btn-secondary" href="/">Cancel</NavLink>
         <br />

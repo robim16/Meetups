@@ -13,6 +13,7 @@
                 <th>Begin Time</th>
                 <th>End Time</th>
                 <th>Capacity</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -48,6 +49,11 @@
                             
                         }
                     </td>
+                    <td>
+                        <DeleteEventComponent 
+                            ButtonClass="btn btn-link"
+                            EventViewModel="createdEvent" />
+                    </td> 
                 </tr>
             }
         </tbody>

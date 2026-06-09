@@ -32,7 +32,6 @@ namespace Meetups.WebApp.Shared.ViewModels
         public string? Category { get; set; }
         public int Capacity { get; set; }
 
-        [Required(ErrorMessage = "Cover image is required.")]
         public IBrowserFile CoverImage { get; set; }
 
         [Required]
@@ -76,6 +75,22 @@ namespace Meetups.WebApp.Shared.ViewModels
                return errorMessage;
             }
 
+            errorMessage = ValidateCoverImage();
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                return errorMessage;
+            }
+            return string.Empty;
+        }
+
+        public string? ValidateCoverImage()
+        {
+            if (CoverImage == null && EventId <= 0)
+            {
+                return "Cover image is required.";
+            }
+           
             return string.Empty;
         }
 
