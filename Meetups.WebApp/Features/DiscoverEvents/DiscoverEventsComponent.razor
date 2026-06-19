@@ -1,0 +1,43 @@
+﻿@page "/events"
+
+@inject NavigationManager NavigationManager;
+@inject DiscoverEventsService DiscoverEventsService;
+@inject SharedHelper SharedHelper;
+
+<h3>Events</h3>
+
+<div class="container">
+    <div class="row g-3">
+        @if(_events is not null && _events.Count > 0)
+        {
+            @foreach(var ev in _events)
+            {
+                var eventImage = ev.ImageUrl;
+                if (string.IsNullOrWhiteSpace(eventImage))
+                {
+                    eventImage = "/images/default-event.png";
+                }
+
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <a href="#" class="text-decoration-none">
+                        <div class="card border-0">
+                            <img src="@eventImage" alt="Event Image" class="rounded"/>
+                            <p class="mt-1 mb-0 text-muted">@($"{ ev.BeginDate:ddd MMM d } - {@ev.BeginTime:h:mmtt}".ToUpper())</p>
+                            <p class="card-title fw-bold">@ev.Title</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+
+    private List<EventViewModel> _events;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _events = await DiscoverEventsService.GetEventsAsync(SharedHelper.GetQueryParamValue("search"));
+    }
+}

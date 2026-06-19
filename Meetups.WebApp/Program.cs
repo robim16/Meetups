@@ -3,6 +3,7 @@
 using Meetups.WebApp.Data;
 using Meetups.WebApp.Features.CreateEvent;
 using Meetups.WebApp.Features.DeleteEvent;
+using Meetups.WebApp.Features.DiscoverEvents;
 using Meetups.WebApp.Features.EditEvent;
 using Meetups.WebApp.Features.ViewCreatedEvents;
 using Meetups.WebApp.Shared;
@@ -16,6 +17,7 @@ builder.Services.AddTransient<CreateEventService>();
 builder.Services.AddTransient<ViewCreatedEventsService>();
 builder.Services.AddTransient<EditEventService>();
 builder.Services.AddTransient<DeleteEventService>();
+builder.Services.AddTransient<DiscoverEventsService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

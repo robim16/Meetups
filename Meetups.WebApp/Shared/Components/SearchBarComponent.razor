@@ -1,0 +1,40 @@
+﻿@inject NavigationManager NavigationManager;
+@inject SharedHelper SharedHelper;
+
+<form class="d-flex" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+        @bind-value="searchQuery"
+        @bind-value:event="oninput"
+        @onkeydown="HandleKeyPress"
+    >
+    <button class="btn @ButtonClass" type="button" @onclick="Search">Search</button>
+</form>
+
+@code {
+
+    [Parameter]
+    public string? SearchUrl { get; set; }
+
+    [Parameter]
+    public string? ButtonClass { get; set; }
+
+    private string searchQuery = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        searchQuery = SharedHelper.GetQueryParamValue("search");
+    }
+
+    private void Search()
+    {
+        NavigationManager.NavigateTo($"/search?query={Uri.EscapeDataString(searchQuery)}", forceLoad: true);
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if(e.Key == "Enter")
+        {
+            Search();
+        }
+    }
+}
