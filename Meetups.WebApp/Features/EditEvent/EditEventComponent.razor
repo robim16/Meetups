@@ -1,4 +1,4 @@
-﻿@page "/events/edit/{eventId:int}"
+﻿@page "/org/events/edit/{eventId:int}"
 @inject EditEventService EditEventService
 @inject NavigationManager NavigationManager
 
@@ -62,7 +62,7 @@ else
 
         await EditEventService.UpdateEventAsync(_eventViewModel);
 
-        NavigationManager.NavigateTo("/events");
+        NavigationManager.NavigateTo("/org/events");
     }
 
     private void Delete()

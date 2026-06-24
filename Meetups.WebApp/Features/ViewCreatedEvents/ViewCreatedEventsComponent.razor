@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/org/events"
 
 @inject ViewCreatedEventsService viewCreatedEventsService;
 
@@ -21,7 +21,7 @@
             {
                 <tr>
                     <td style="text-align: center;">
-                        <a href="/events/edit/@createdEvent.EventId">
+                        <a href="/org/events/edit/@createdEvent.EventId">
                              @{
                                 var eventImage = createdEvent.ImageUrl;
                                 if(string.IsNullOrWhiteSpace(eventImage))
@@ -61,7 +61,7 @@
 }
 
 
-<a href="/events/create" class="btn btn-primary">Create New Meetup</a>
+<a href="/org/events/create" class="btn btn-primary">Create New Meetup</a>
 
 @code {
     private List<EventViewModel> _createdEvents = new List<EventViewModel>();

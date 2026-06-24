@@ -11,7 +11,7 @@ namespace Meetups.WebApp.Data.Entities
         [StringLength(100, MinimumLength = 5)]
         public string? Title { get; set; }
 
-        [StringLength(maximumLength: 500)]
+        [StringLength(maximumLength: 1000)]
         public string Description { get; set; }
 
         [Required]

@@ -15,7 +15,7 @@
 
         <div class="form-group">
             <label for="description">Description</label>
-            <InputText id="description" class="form-control" @bind-Value="EventViewModel.Description" />
+            <InputTextArea id="description" class="form-control" @bind-Value="EventViewModel.Description" rows="10" />
             <ValidationMessage For="@(() => EventViewModel.Description)" />
         </div>
 
@@ -109,7 +109,7 @@
         )
         
         &nbsp;
-        <NavLink class="btn btn-secondary" href="/events">Cancel</NavLink>
+        <NavLink class="btn btn-secondary" href="/org/events">Cancel</NavLink>
         <br />
     </EditForm>
 

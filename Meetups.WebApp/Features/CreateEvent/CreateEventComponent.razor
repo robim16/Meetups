@@ -1,4 +1,4 @@
-﻿@page "/events/create";
+﻿@page "/org/events/create";
 @using SixLabors.ImageSharp.Processing
 
 @inject NavigationManager NavigationManager;
@@ -31,7 +31,7 @@
 
         await CreateEventService.CreateEventAsync(_eventViewModel);
 
-        NavigationManager.NavigateTo("/events");
+        NavigationManager.NavigateTo("/org/events");
     }
 
    

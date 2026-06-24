@@ -1,0 +1,46 @@
+﻿@page "/events/{id:int}"
+@inject ViewEventService ViewEventService;
+
+@if(_eventViewModel is not null)
+{
+    <h2>@_eventViewModel.Title</h2>
+    <hr />
+
+    <p>
+        <img src="@_eventViewModel.ImageUrl" alt="Event Image" class="rounded"/>
+    </p>
+
+    <br />
+
+    <h6>Details</h6>
+    <pre style="white-space: pre-wrap; word-wrap: break-word">
+        @_eventViewModel.Description
+    </pre>
+
+    <footer class="container-fluid bg-dark text-white py-3 position-fixed bottom-0 w-100">
+        <p>
+            <strong>Location:</strong> @_eventViewModel.Location
+        </p>
+        <p>
+            <strong>Date:</strong> @_eventViewModel.BeginDate.ToString("dd/MM/yyyy")
+        </p>
+        <p>
+            <strong>Time:</strong> @_eventViewModel.BeginTime.ToString(@"hh\:mm")
+        </p>
+    </footer>
+    
+}
+
+
+
+@code {
+
+    [Parameter]
+    public int id { get; set; }
+    private EventViewModel _eventViewModel;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var ev = await ViewEventService.GetEventByIdAsync(id);
+    }
+}

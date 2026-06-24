@@ -1,4 +1,4 @@
-﻿@page "/events"
+﻿@page "/"
 
 @inject NavigationManager NavigationManager;
 @inject DiscoverEventsService DiscoverEventsService;
@@ -19,10 +19,10 @@
                 }
 
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <a href="#" class="text-decoration-none">
+                    <a href="/events/@ev.EventId" class="text-decoration-none">
                         <div class="card border-0">
                             <img src="@eventImage" alt="Event Image" class="rounded"/>
-                            <p class="mt-1 mb-0 text-muted">@($"{ ev.BeginDate:ddd MMM d } - {@ev.BeginTime:h:mmtt}".ToUpper())</p>
+                            <p class="mt-1 mb-0 text-muted">@($"{ ev.BeginDate:ddd MMM d} - {@ev.BeginTime:h:mmtt}".ToUpper())</p>
                             <p class="card-title fw-bold">@ev.Title</p>
                         </div>
                     </a>

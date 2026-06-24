@@ -35,7 +35,7 @@
 
             if(await DeleteEventService.DeleteEventAsync(EventViewModel?.EventId))
             {
-                NavigationManager.NavigateTo("/events", forceLoad: true);
+                NavigationManager.NavigateTo("/org/events", forceLoad: true);
             }
 
             else {
