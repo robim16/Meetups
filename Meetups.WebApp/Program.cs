@@ -9,10 +9,12 @@ using Meetups.WebApp.Features.ViewCreatedEvents;
 using Meetups.WebApp.Features.ViewEvent;
 using Meetups.WebApp.Shared;
 using Meetups.WebApp.Shared.Layout;
+using Meetups.WebApp.Shared.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<LayoutService>();
 builder.Services.AddTransient<SharedHelper>();
 builder.Services.AddTransient<CreateEventService>();
 builder.Services.AddTransient<ViewCreatedEventsService>();

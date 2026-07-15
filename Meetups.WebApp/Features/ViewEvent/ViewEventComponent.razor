@@ -1,5 +1,8 @@
-﻿@page "/events/{id:int}"
+﻿
+
+@page "/events/{id:int}"
 @inject ViewEventService ViewEventService;
+@inject LayoutService layoutService;
 
 @if(_eventViewModel is not null)
 {
@@ -16,18 +19,6 @@
     <pre style="white-space: pre-wrap; word-wrap: break-word">
         @_eventViewModel.Description
     </pre>
-
-    <footer class="container-fluid bg-dark text-white py-3 position-fixed bottom-0 w-100">
-        <p>
-            <strong>Location:</strong> @_eventViewModel.Location
-        </p>
-        <p>
-            <strong>Date:</strong> @_eventViewModel.BeginDate.ToString("dd/MM/yyyy")
-        </p>
-        <p>
-            <strong>Time:</strong> @_eventViewModel.BeginTime.ToString(@"hh\:mm")
-        </p>
-    </footer>
     
 }
 
@@ -42,5 +33,16 @@
     protected override async Task OnParametersSetAsync()
     {
         var ev = await ViewEventService.GetEventByIdAsync(id);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LayoutService.SetSectionContent(@<footer>
+                <p class="mt-1 mb-0 card-text">Today</p>
+                <p class="card-title fw-bold">Event title</p>
+            </footer>);
+        }
     }
 }

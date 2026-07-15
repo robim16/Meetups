@@ -1,4 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using Meetups.WebApp.Shared.Services
+@inherits LayoutComponentBase
+@inject LayoutService layoutService;
+
+@implements IDisposable
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid">
@@ -18,9 +22,28 @@
    @Body
 </main>
 
+<div>
+    @layoutService.SectionContent
+</div>
+
+
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        layoutService.OnContentChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        layoutService.OnContentChanged -= StateHasChanged;
+    }
+}
